@@ -1,4 +1,4 @@
-import 'package:barcode_ml_kit/util/only_numbers.dart';
+import 'package:barcode_bill_scanner/util/only_numbers.dart';
 
 /// Classe utilitária para conversões de códigos de boleto bancário.
 ///

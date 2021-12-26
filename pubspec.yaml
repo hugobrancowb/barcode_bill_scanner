@@ -1,7 +1,6 @@
-name: barcode_ml_kit
+name: barcode_bill_scanner
 description: A new Flutter package project.
-version: 0.0.1
-publish_to: none # para publicar, o package google_ml_code precisa estar publicado também
+version: 0.1.0
 homepage:
 
 environment:
@@ -14,9 +13,7 @@ dependencies:
 
   permission_handler: ^8.3.0
   camera: ^0.9.4+5
-  google_ml_barcode:
-    git: 
-      url: https://github.com/hugobrancowb/google_ml_barcode
+  google_barcode_kit: ^0.7.3
 
 dev_dependencies:
   flutter_test:

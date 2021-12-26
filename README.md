@@ -1,2 +1,2 @@
-# barcode_ml_kit
-barcode_ml_kit
+# barcode_bill_scanner
+barcode_bill_scanner

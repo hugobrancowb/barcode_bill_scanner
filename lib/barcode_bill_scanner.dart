@@ -1,14 +1,14 @@
-library barcode_ml_kit;
+library barcode_bill_scanner;
 
-import 'package:barcode_ml_kit/util/bill_util.class.dart';
+import 'package:barcode_bill_scanner/util/bill_util.class.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_barcode/google_ml_kit.dart';
+import 'package:google_barcode_kit/google_barcode_kit.dart';
 
 import 'widgets/bill_scan_camera.widget.dart';
 
 /// Tela onde a câmera faz a leitura do código de barras.
-class BarcodeMLKit extends StatefulWidget {
-  const BarcodeMLKit({
+class BarcodeBillScanner extends StatefulWidget {
+  const BarcodeBillScanner({
     Key? key,
     this.infoText = 'Utilize a câmera para leitura do boleto bancário',
     required this.onSuccess,
@@ -48,7 +48,7 @@ class BarcodeMLKit extends StatefulWidget {
   _BarcodeMLKitState createState() => _BarcodeMLKitState();
 }
 
-class _BarcodeMLKitState extends State<BarcodeMLKit> {
+class _BarcodeMLKitState extends State<BarcodeBillScanner> {
   BarcodeScanner barcodeScanner = GoogleMlKit.vision.barcodeScanner([
     BarcodeFormat.itf,
     BarcodeFormat.codabar,
