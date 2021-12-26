@@ -1,6 +1,7 @@
 name: barcode_ml_kit
 description: A new Flutter package project.
 version: 0.0.1
+publish_to: none # para publicar, o package google_ml_code precisa estar publicado também
 homepage:
 
 environment:
@@ -10,6 +11,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  permission_handler: ^8.3.0
+  camera: ^0.9.4+5
+  google_ml_barcode:
+    git: 
+      url: https://github.com/hugobrancowb/google_ml_barcode
 
 dev_dependencies:
   flutter_test:
