@@ -8,16 +8,12 @@ import 'package:google_barcode_kit/google_barcode_kit.dart';
 class BillScanCameraWidget extends StatefulWidget {
   const BillScanCameraWidget({
     Key? key,
-    this.title,
     required this.onImage,
-    required this.color,
     this.initialDirection = CameraLensDirection.back,
   }) : super(key: key);
 
-  final String? title;
   final Function(InputImage inputImage) onImage;
   final CameraLensDirection initialDirection;
-  final Color color;
 
   @override
   _BillScanCameraWidgetState createState() => _BillScanCameraWidgetState();
@@ -49,52 +45,14 @@ class _BillScanCameraWidgetState extends State<BillScanCameraWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double _screenHeight = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      body: _controller?.value.isInitialized == true
-          ? Container(
-              color: Colors.black,
-              child: Stack(
-                children: <Widget>[
-                  Center(child: CameraPreview(_controller!)),
-                  if (widget.title != null)
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: RotatedBox(
-                        quarterTurns: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Text(
-                            widget.title!,
-                            style: const TextStyle(
-                              fontFamily: "Montserrat",
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16.0,
-                              color: Colors.white,
-                              shadows: [
-                                Shadow(
-                                  blurRadius: 5.0,
-                                  color: Color.fromARGB(180, 0, 0, 0),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  Center(
-                    child: Container(
-                      width: 2.0,
-                      height: _screenHeight * 0.8,
-                      color: widget.color,
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : Container(),
-    );
+    return _controller?.value.isInitialized == true
+        ? Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.black,
+            child: Center(child: CameraPreview(_controller!)),
+          )
+        : Container();
   }
 
   Future _startLiveFeed() async {

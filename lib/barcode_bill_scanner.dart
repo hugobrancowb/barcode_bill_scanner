@@ -2,6 +2,7 @@ library barcode_bill_scanner;
 
 import 'package:barcode_bill_scanner/util/bill_util.class.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_barcode_kit/google_barcode_kit.dart';
 
 import 'widgets/bill_scan_camera.widget.dart';
@@ -10,14 +11,15 @@ import 'widgets/bill_scan_camera.widget.dart';
 class BarcodeBillScanner extends StatefulWidget {
   const BarcodeBillScanner({
     Key? key,
-    this.infoText = 'Utilize a câmera para leitura do boleto bancário',
+    this.infoText = 'Escaneie o código de barras do boleto',
     required this.onSuccess,
     required this.onCancel,
     this.onError,
     this.onCancelLabel = "Voltar",
     this.color = Colors.cyan,
-    this.textColor = const Color(0xffffffff),
+    this.textColor = const Color(0xff696876),
     this.convertToFebraban = true,
+    this.backdropColor = const Color(0x99000000),
   }) : super(key: key);
 
   /// Texto informativo exibido ao topo da tela
@@ -44,6 +46,9 @@ class BarcodeBillScanner extends StatefulWidget {
   /// Converte o código de barras de 40 dígitos para o padrão FEBRABAN (47/48 dígitos).
   final bool convertToFebraban;
 
+  /// Cor escura e transparente que cria uma moldura em torno do formato da barra.
+  final Color backdropColor;
+
   @override
   _BarcodeMLKitState createState() => _BarcodeMLKitState();
 }
@@ -57,55 +62,107 @@ class _BarcodeMLKitState extends State<BarcodeBillScanner> {
 
   @override
   Widget build(BuildContext context) {
-    double _screenHeight = MediaQuery.of(context).size.height;
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        BillScanCameraWidget(
-          title: widget.infoText,
-          color: widget.color,
-          onImage: (inputImage) {
-            _processImage(inputImage);
-          },
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 12.0,
+        backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.dark,
+          systemStatusBarContrastEnforced: true,
         ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Container(
-            constraints: BoxConstraints(maxHeight: _screenHeight / 2),
-            child: RotatedBox(
-              quarterTurns: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: ElevatedButton(
-                  onPressed: widget.onCancel,
-                  child: Text(
-                    widget.onCancelLabel,
-                    style: TextStyle(
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16.0,
-                      color: widget.textColor,
-                    ),
+        elevation: 0,
+      ),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          BillScanCameraWidget(
+            onImage: (inputImage) {
+              _processImage(inputImage);
+            },
+          ),
+          RotatedBox(
+            quarterTurns: 1,
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  color: widget.backdropColor,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: GestureDetector(
+                          onTap: widget.onCancel,
+                          child: const Padding(
+                            padding: EdgeInsets.fromLTRB(24.0, 16.0, 16.0, 16.0),
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Text(
+                          widget.infoText,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontFamily: "Montserrat",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all<Color?>(const Color(0xffa3a3a3)),
-                    backgroundColor: MaterialStateProperty.all<Color?>(widget.color),
-                    minimumSize:
-                        MaterialStateProperty.all<Size?>(const Size(double.infinity, 48.0)),
-                    elevation: MaterialStateProperty.all<double>(2),
-                    shape: MaterialStateProperty.all<OutlinedBorder?>(
-                      RoundedRectangleBorder(
-                        side: const BorderSide(color: Colors.black, width: 1.0),
-                        borderRadius: BorderRadius.circular(24.0),
+                ),
+                Expanded(
+                  child: Container(
+                    color: widget.backdropColor,
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    color: Colors.transparent,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    color: widget.backdropColor,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: widget.onCancel,
+                  child: Container(
+                    width: double.infinity,
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24.0),
+                      child: Text(
+                        widget.onCancelLabel,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16.0,
+                          color: widget.textColor,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
