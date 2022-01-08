@@ -7,7 +7,39 @@ import 'package:google_barcode_kit/google_barcode_kit.dart';
 
 import 'widgets/bill_scan_camera.widget.dart';
 
-/// Tela onde a câmera faz a leitura do código de barras.
+/// Widget utilizado para leitura e conversão de código de barras.
+///
+/// Este widget serve como tela para exibição da câmera que faz a leitura do código de barras.
+/// Abaixo pode-se observar um exemplo de uso:
+///
+/// ```dart
+///  @override
+///  Widget build(BuildContext context) {
+///    return Stack(
+///      alignment: Alignment.center,
+///      children: [
+///        BarcodeBillScanner(
+///          onCancelLabel: "You can set a message to cancel an action",
+///          onSuccess: (String value) async {
+///            setState(() => barcode = value);
+///          },
+///          onCancel: () {
+///            setState(() => barcode = null);
+///          },
+///        ),
+///        if (barcode != null)
+///          Text(
+///            barcode!,
+///            textAlign: TextAlign.center,
+///            style: const TextStyle(
+///              fontSize: 20.0,
+///              color: Colors.amber,
+///            ),
+///          ),
+///      ],
+///    );
+///  }
+/// ```
 class BarcodeBillScanner extends StatefulWidget {
   const BarcodeBillScanner({
     Key? key,
