@@ -1,7 +1,8 @@
 name: barcode_bill_scanner
 description: A new Flutter package project.
 version: 1.0.0
-homepage:
+homepage: https://github.com/hugobrancowb/barcode_bill_scanner
+repository: https://github.com/hugobrancowb/barcode_bill_scanner
 
 environment:
   sdk: ">=2.15.0 <3.0.0"
