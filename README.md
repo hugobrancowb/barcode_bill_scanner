@@ -3,6 +3,8 @@ Scanner de código de barras para Flutter.
 
 O **barcode_bill_scanner** foi criado devido à necessidade de leitura de códigos de barras horizontais (como em contas e boletos bancários) assim como sua conversão para o padrão brasileiro, conforme determinado pela FEBRABAN.
 
+![gif example](https://user-images.githubusercontent.com/11953552/148662123-32c06f35-3dd0-4faf-94cb-8ed56a54e20c.gif)
+
 ## Requirements
 
 ### iOS
