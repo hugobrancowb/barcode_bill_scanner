@@ -1,9 +1,31 @@
-# barcode_bill_scanner
-Scanner de código de barras para Flutter.
+<h1 align="center">Barcode Bill Scanner</h1>
 
-O **barcode_bill_scanner** foi criado devido à necessidade de leitura de códigos de barras horizontais (como em contas e boletos bancários) assim como sua conversão para o padrão brasileiro, conforme determinado pela FEBRABAN.
+Barcode scanner build for Flutter.
 
-![gif example](https://user-images.githubusercontent.com/11953552/148662123-32c06f35-3dd0-4faf-94cb-8ed56a54e20c.gif)
+**Barcode Bill Scanner** aims to be used by brazilian apps willing to get a readable code from a horizontal barcode, mainly from bills.
+Brazilian's pattern for barcode is defined by [FEBRABAN](https://febraban.org.br), which has a couple of rules for transforming a regular 44-length code into 47~48 character long.
+
+Our package converts the barcode by default to FEBRABAN's format but can easily be turned off if necessary.
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/11953552/149662832-294915e1-3ca0-4a3e-91e3-b834409eaba8.gif">
+</p>
+
+## How to use
+```dart
+  @override
+  Widget build(BuildContext context) {
+    return BarcodeBillScanner(
+      onCancelLabel: "You can set a message to cancel an action",
+      onSuccess: (String value) async {
+        setState(() => barcode = value);
+      },
+      onCancel: () {
+        setState(() => barcode = null);
+      },
+    );
+  }
+```
 
 ## Requirements
 
@@ -47,39 +69,7 @@ post_install do |installer|
 end
 ```
 
-Notice that the minimum `IPHONEOS_DEPLOYMENT_TARGET` is 10.0, you can set it to something newer but not older.
-
 ### Android
 
 - minSdkVersion: 21
 - targetSdkVersion: 29
-
-## How to use
-```dart
- @override
- Widget build(BuildContext context) {
-   return Stack(
-     alignment: Alignment.center,
-     children: [
-       BarcodeBillScanner(
-         onCancelLabel: "You can set a message to cancel an action",
-         onSuccess: (String value) async {
-           setState(() => barcode = value);
-         },
-         onCancel: () {
-           setState(() => barcode = null);
-         },
-       ),
-       if (barcode != null)
-         Text(
-           barcode!,
-           textAlign: TextAlign.center,
-           style: const TextStyle(
-             fontSize: 20.0,
-             color: Colors.amber,
-           ),
-         ),
-     ],
-   );
- }
-```

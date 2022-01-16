@@ -1,9 +1,7 @@
-/// Extrai apenas os números de uma string.
+/// Formats a [String] so it has only number characters in it's output.
 extension OnlyNumbersExtension on String {
-  String formatOnlyNumbers() {
-    return this.replaceAllMapped(
-      RegExp(r"([^0-9])", caseSensitive: false),
-      (Match m) => "",
-    );
-  }
+  String formatOnlyNumbers() => replaceAllMapped(
+        RegExp(r"([^0-9])", caseSensitive: false),
+        (Match m) => "",
+      );
 }

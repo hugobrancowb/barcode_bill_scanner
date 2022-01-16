@@ -7,10 +7,12 @@ import 'package:google_barcode_kit/google_barcode_kit.dart';
 
 import 'widgets/bill_scan_camera.widget.dart';
 
-/// Widget utilizado para leitura e conversão de código de barras.
+/// Widget used to read and convert a barcode.
 ///
+/// It shows a friendly interface guiding the user to scan the barcode using the phone's camera.
 /// Este widget serve como tela para exibição da câmera que faz a leitura do código de barras.
-/// Abaixo pode-se observar um exemplo de uso:
+///
+/// Example:
 ///
 /// ```dart
 ///  @override
@@ -43,42 +45,43 @@ import 'widgets/bill_scan_camera.widget.dart';
 class BarcodeBillScanner extends StatefulWidget {
   const BarcodeBillScanner({
     Key? key,
-    this.infoText = 'Escaneie o código de barras do boleto',
+    this.infoText =
+        'Escaneie o código de barras do boleto', // "Scan the barcode using your camera."
     required this.onSuccess,
     required this.onCancel,
     this.onError,
-    this.onCancelLabel = "Voltar",
+    this.onCancelLabel = "Voltar", // "Back"
     this.color = Colors.cyan,
     this.textColor = const Color(0xff696876),
     this.convertToFebraban = true,
     this.backdropColor = const Color(0x99000000),
   }) : super(key: key);
 
-  /// Texto informativo exibido ao topo da tela
+  /// Text shown on top of the screen.
   final String infoText;
 
-  /// Função que recebe o código de barras em formato String.
+  /// Method called after the barcode is successfuly read and converted.
   final Future<dynamic> Function(String value) onSuccess;
 
-  /// Função chamada pelo botão de voltar/cancelar.
+  /// Method called by the cancel button.
   final Function() onCancel;
 
-  /// Texto exibido no botão de voltar/cancelar.
+  /// Label for the cancel button.
   final String onCancelLabel;
 
-  /// Função chamada quando ocorre um erro ao escanear o código.
+  /// Method called on error while reading the barcode.
   final Function()? onError;
 
-  /// Cor principal do scan, utilizada nos botões, textos e linha de scan.
+  /// Main color.
   final Color color;
 
-  /// Cor do texto. Deve ser constrastante com a [color].
+  /// Text color. Must have enough contrast with [color].
   final Color textColor;
 
-  /// Converte o código de barras de 40 dígitos para o padrão FEBRABAN (47/48 dígitos).
+  /// If `true` converts the barcode to FEBRABAN format (47/48 characters long).
   final bool convertToFebraban;
 
-  /// Cor escura e transparente que cria uma moldura em torno do formato da barra.
+  /// Backdrop color used as a frame for reading the barcode.
   final Color backdropColor;
 
   @override
@@ -198,7 +201,7 @@ class _BarcodeMLKitState extends State<BarcodeBillScanner> {
     );
   }
 
-  /// Realiza a leitura da imagem [inputImage] para conversão em código.
+  /// Processes the [inputImage] to extract and format the barcode's numbers.
   Future<void> _processImage(InputImage inputImage) async {
     if (isBusy) return;
     isBusy = true;
