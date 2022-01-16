@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_barcode_kit/google_barcode_kit.dart';
 
-/// Widget utilizado para leitura de código de barras através da câmera nativa.
+/// Widget used to read the barcode using phone's camera.
 class BillScanCameraWidget extends StatefulWidget {
   const BillScanCameraWidget({
     Key? key,
