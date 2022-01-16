@@ -8,7 +8,7 @@ Brazilian's pattern for barcode is defined by [FEBRABAN](https://febraban.org.br
 Our package converts the barcode by default to FEBRABAN's format but can easily be turned off if necessary.
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/11953552/149662832-294915e1-3ca0-4a3e-91e3-b834409eaba8.gif">
+  <img src="https://user-images.githubusercontent.com/11953552/148662123-32c06f35-3dd0-4faf-94cb-8ed56a54e20c.gif">
 </p>
 
 ## How to use
@@ -28,8 +28,8 @@ Our package converts the barcode by default to FEBRABAN's format but can easily 
 ```
 
 ## Requirements
-
-### iOS
+<details>
+<summary>iOS</summary>
 
 - Minimum iOS Deployment Target: 10.0
 - Xcode 12 or newer
@@ -68,8 +68,11 @@ post_install do |installer|
   end
 end
 ```
+</details>
 
-### Android
-
+<details>
+<summary>Android</summary>
+  
 - minSdkVersion: 21
 - targetSdkVersion: 29
+</details>
