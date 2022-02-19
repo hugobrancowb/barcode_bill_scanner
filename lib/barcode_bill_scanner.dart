@@ -45,12 +45,12 @@ import 'widgets/bill_scan_camera.widget.dart';
 class BarcodeBillScanner extends StatefulWidget {
   const BarcodeBillScanner({
     Key? key,
-    this.infoText =
-        'Escaneie o código de barras do boleto', // "Scan the barcode using your camera."
+    this.infoText = "Scan the barcode using your camera.",
     required this.onSuccess,
+    this.onAction,
     required this.onCancel,
     this.onError,
-    this.onCancelLabel = "Voltar", // "Back"
+    this.onActionLabel = "Type barcode",
     this.color = Colors.cyan,
     this.textColor = const Color(0xff696876),
     this.convertToFebraban = true,
@@ -63,11 +63,14 @@ class BarcodeBillScanner extends StatefulWidget {
   /// Method called after the barcode is successfuly read and converted.
   final Future<dynamic> Function(String value) onSuccess;
 
+  /// Method called by the action button.
+  final Function()? onAction;
+
   /// Method called by the cancel button.
   final Function() onCancel;
 
-  /// Label for the cancel button.
-  final String onCancelLabel;
+  /// Label for the action button.
+  final String onActionLabel;
 
   /// Method called on error while reading the barcode.
   final Function()? onError;
@@ -174,14 +177,14 @@ class _BarcodeMLKitState extends State<BarcodeBillScanner> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: widget.onCancel,
+                  onTap: widget.onAction,
                   child: Container(
                     width: double.infinity,
                     color: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24.0),
                       child: Text(
-                        widget.onCancelLabel,
+                        widget.onActionLabel,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: "Montserrat",

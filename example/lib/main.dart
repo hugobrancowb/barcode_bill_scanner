@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
       alignment: Alignment.center,
       children: [
         BarcodeBillScanner(
-          onCancelLabel: "You can set a message to cancel an action",
+          onActionLabel: "You can set a message to cancel an action",
           onSuccess: (String value) async {
             setState(() => barcode = value);
           },
