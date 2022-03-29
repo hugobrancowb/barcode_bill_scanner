@@ -1,5 +1,5 @@
 name: barcode_bill_scanner
-description: A new Flutter package project.
+description: Barcode Bill Scanner aims to be used by brazilian apps willing to get a readable code from a horizontal barcode, mainly from bills.
 version: 1.0.1
 homepage: https://github.com/hugobrancowb/barcode_bill_scanner
 repository: https://github.com/hugobrancowb/barcode_bill_scanner
