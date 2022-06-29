@@ -88,15 +88,14 @@ class BarcodeBillScanner extends StatefulWidget {
   final Color backdropColor;
 
   @override
-  _BarcodeMLKitState createState() => _BarcodeMLKitState();
+  BarcodeMLKitState createState() => BarcodeMLKitState();
 }
 
-class _BarcodeMLKitState extends State<BarcodeBillScanner> {
+class BarcodeMLKitState extends State<BarcodeBillScanner> {
   BarcodeScanner barcodeScanner = GoogleMlKit.vision.barcodeScanner([
     BarcodeFormat.itf,
     BarcodeFormat.codabar,
   ]);
-  bool isBusy = false;
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +115,8 @@ class _BarcodeMLKitState extends State<BarcodeBillScanner> {
         alignment: Alignment.center,
         children: [
           BillScanCameraWidget(
-            onImage: (inputImage) {
-              _processImage(inputImage);
+            onImage: (barcodes) {
+              _processImage(barcodes);
             },
           ),
           RotatedBox(
@@ -205,25 +204,18 @@ class _BarcodeMLKitState extends State<BarcodeBillScanner> {
   }
 
   /// Processes the [inputImage] to extract and format the barcode's numbers.
-  Future<void> _processImage(InputImage inputImage) async {
-    if (isBusy) return;
-    isBusy = true;
-    final barcodes = await barcodeScanner.processImage(inputImage);
+  Future<void> _processImage(List<Barcode> barcodes) async {
+    try {
+      Barcode validBarcode = barcodes.firstWhere((e) => e.value.displayValue?.length == 44);
+      String code = widget.convertToFebraban
+          ? BillUtil.getFormattedbarcode(validBarcode.value.displayValue!)
+          : validBarcode.value.displayValue!;
 
-    if (barcodes.isNotEmpty) {
-      try {
-        Barcode validBarcode = barcodes.firstWhere((e) => e.value.displayValue?.length == 44);
-        String code = widget.convertToFebraban
-            ? BillUtil.getFormattedbarcode(validBarcode.value.displayValue!)
-            : validBarcode.value.displayValue!;
-
-        widget.onSuccess(code).whenComplete(() => isBusy = false);
-      } catch (e) {
-        if (widget.onError != null) widget.onError!();
-      }
+      widget.onSuccess(code);
+    } catch (e) {
+      if (widget.onError != null) widget.onError!();
     }
 
-    isBusy = false;
     if (mounted) {
       setState(() {});
     }
