@@ -1,4 +1,4 @@
-name: barcode_bill_scanner example
+name: barcode_bill_scanner_example
 description: Barcode Bill Scanner aims to be used by brazilian apps willing to get a readable code from a horizontal barcode, mainly from bills.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
