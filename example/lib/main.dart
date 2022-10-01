@@ -31,28 +31,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        BarcodeBillScanner(
-          onActionLabel: "You can set a message to cancel an action",
-          onSuccess: (String value) async {
-            setState(() => barcode = value);
-          },
-          onCancel: () {
-            setState(() => barcode = null);
-          },
-        ),
-        if (barcode != null)
-          Text(
-            barcode!,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 20.0,
-              color: Colors.amber,
-            ),
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          BarcodeBillScanner(
+            onActionLabel: "You can set a message to cancel an action",
+            onSuccess: (String value) async {
+              setState(() => barcode = value);
+            },
+            onCancel: () {
+              setState(() => barcode = null);
+            },
           ),
-      ],
+          if (barcode != null)
+            Center(
+              child: RotatedBox(
+                quarterTurns: 1,
+                child: Text(
+                  barcode!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.amber,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

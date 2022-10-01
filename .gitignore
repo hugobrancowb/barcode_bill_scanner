@@ -117,9 +117,3 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
-
-example/~/Library/Android/sdk/emu-last-feature-flags.protobuf
-example/~/Library/Android/sdk/emu-update-last-check.ini
-example/~/Library/Android/sdk/maps.key
-example/~/Library/Android/sdk/modem-nv-ram-5554
-lib/test/bill_util.class_test.dart
