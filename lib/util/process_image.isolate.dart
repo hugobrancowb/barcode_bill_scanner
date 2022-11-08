@@ -3,7 +3,7 @@ import 'dart:isolate';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_barcode_kit/google_barcode_kit.dart';
+import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 
 /// Calls parallel method to convert image from [CameraImage] type into [InputImage] type.
 Future<void> processCameraImage(ReceivePort rp, CameraImage image) async {
@@ -27,9 +27,10 @@ void _processCameraImage(Map<String, dynamic> message) async {
   final bytes = allBytes.done().buffer.asUint8List();
 
   final Size imageSize = Size(image.width.toDouble(), image.height.toDouble());
-  const imageRotation = InputImageRotation.Rotation_0deg;
+  const imageRotation = InputImageRotation.rotation0deg;
   final inputImageFormat =
-      InputImageFormatMethods.fromRawValue(image.format.raw) ?? InputImageFormat.NV21;
+      InputImageFormatValue.fromRawValue(image.format.raw) ??
+          InputImageFormat.nv21;
 
   final planeData = image.planes.map(
     (Plane plane) {
@@ -48,7 +49,8 @@ void _processCameraImage(Map<String, dynamic> message) async {
     planeData: planeData,
   );
 
-  final InputImage inputImage = InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
+  final InputImage inputImage =
+      InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 
   Isolate.exit(sp, inputImage);
 }
