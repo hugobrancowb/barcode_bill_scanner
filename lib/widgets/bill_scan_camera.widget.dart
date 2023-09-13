@@ -5,7 +5,7 @@ import 'package:barcode_bill_scanner/util/process_image.isolate.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_barcode_kit/google_barcode_kit.dart';
+import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:rxdart/rxdart.dart';
 
 /// Widget used to read the barcode using phone's camera.
@@ -31,7 +31,8 @@ class BillScanCameraWidgetState extends State<BillScanCameraWidget> {
   CameraController? cameraController;
 
   /// Stream of images to be processed.
-  final StreamController<CameraImage> streamController = StreamController<CameraImage>();
+  final StreamController<CameraImage> streamController =
+      StreamController<CameraImage>();
 
   /// Subscription of images being processed.
   late final StreamSubscription streamSubscription;
@@ -46,7 +47,7 @@ class BillScanCameraWidgetState extends State<BillScanCameraWidget> {
   double zoomLevel = 1.0, minZoomLevel = 0.0;
 
   /// Scanner for reading barcode images.
-  final BarcodeScanner barcodeScanner = GoogleMlKit.vision.barcodeScanner([
+  final BarcodeScanner barcodeScanner = BarcodeScanner(formats: [
     BarcodeFormat.itf,
     BarcodeFormat.codabar,
   ]);
@@ -62,7 +63,8 @@ class BillScanCameraWidgetState extends State<BillScanCameraWidget> {
     super.didChangeDependencies();
     cameras = await availableCameras();
     for (var i = 0; i < cameras.length; i++) {
-      if (cameras[i].lensDirection == widget.initialDirection && _cameraIndex == null) {
+      if (cameras[i].lensDirection == widget.initialDirection &&
+          _cameraIndex == null) {
         _cameraIndex = i;
       }
     }
@@ -105,7 +107,8 @@ class BillScanCameraWidgetState extends State<BillScanCameraWidget> {
     receivePort
         .asBroadcastStream()
         .whereType<InputImage>()
-        .asyncMap((InputImage inputImage) => barcodeScanner.processImage(inputImage))
+        .asyncMap(
+            (InputImage inputImage) => barcodeScanner.processImage(inputImage))
         .where((List<Barcode> barcodeList) => barcodeList.isNotEmpty)
         .listen(widget.onImage);
   }
@@ -128,7 +131,8 @@ class BillScanCameraWidgetState extends State<BillScanCameraWidget> {
       minZoomLevel = value;
     });
 
-    cameraController?.setZoomLevel(zoomLevel > minZoomLevel ? zoomLevel : minZoomLevel);
+    cameraController
+        ?.setZoomLevel(zoomLevel > minZoomLevel ? zoomLevel : minZoomLevel);
 
     cameraController?.lockCaptureOrientation(DeviceOrientation.portraitUp);
     cameraController?.startImageStream(streamController.add);
