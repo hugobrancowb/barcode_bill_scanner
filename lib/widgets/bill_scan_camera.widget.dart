@@ -111,6 +111,10 @@ class BillScanCameraWidgetState extends State<BillScanCameraWidget> {
     cameraController
         ?.setZoomLevel(zoomLevel > minZoomLevel ? zoomLevel : minZoomLevel);
 
+    if (Platform.isIOS) {
+      cameraController?.lockCaptureOrientation(DeviceOrientation.portraitUp);
+    }
+
     cameraController?.startImageStream(_processCameraImage);
     setState(() {});
   }
