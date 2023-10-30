@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   camera: ^0.10.0+1
-  google_barcode_kit: ^0.7.3
+  google_mlkit_barcode_scanning: ^0.9.0
   rxdart: ^0.27.5
 
 dev_dependencies:

@@ -1,9 +1,10 @@
 library barcode_bill_scanner;
 
-import 'package:barcode_bill_scanner/util/bill_util.class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_barcode_kit/google_barcode_kit.dart';
+import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
+
+import 'package:barcode_bill_scanner/util/bill_util.class.dart';
 
 import 'widgets/bill_scan_camera.widget.dart';
 
@@ -92,7 +93,7 @@ class BarcodeBillScanner extends StatefulWidget {
 }
 
 class BarcodeMLKitState extends State<BarcodeBillScanner> {
-  BarcodeScanner barcodeScanner = GoogleMlKit.vision.barcodeScanner([
+  BarcodeScanner barcodeScanner = BarcodeScanner(formats: [
     BarcodeFormat.itf,
     BarcodeFormat.codabar,
   ]);
@@ -134,7 +135,8 @@ class BarcodeMLKitState extends State<BarcodeBillScanner> {
                         child: GestureDetector(
                           onTap: widget.onCancel,
                           child: const Padding(
-                            padding: EdgeInsets.fromLTRB(24.0, 16.0, 16.0, 16.0),
+                            padding:
+                                EdgeInsets.fromLTRB(24.0, 16.0, 16.0, 16.0),
                             child: Icon(
                               Icons.arrow_back_ios,
                               color: Colors.white,
@@ -206,10 +208,11 @@ class BarcodeMLKitState extends State<BarcodeBillScanner> {
   /// Processes the [inputImage] to extract and format the barcode's numbers.
   Future<void> _processImage(List<Barcode> barcodes) async {
     try {
-      Barcode validBarcode = barcodes.firstWhere((e) => e.value.displayValue?.length == 44);
+      Barcode validBarcode =
+          barcodes.firstWhere((e) => e.rawValue?.length == 44);
       String code = widget.convertToFebraban
-          ? BillUtil.getFormattedbarcode(validBarcode.value.displayValue!)
-          : validBarcode.value.displayValue!;
+          ? BillUtil.getFormattedbarcode(validBarcode.rawValue!)
+          : validBarcode.rawValue!;
 
       widget.onSuccess(code);
     } catch (e) {
