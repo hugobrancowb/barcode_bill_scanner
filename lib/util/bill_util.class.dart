@@ -11,7 +11,9 @@ class BillUtil {
     code = code.formatOnlyNumbers();
     assert(code.length == 44, "Barcode must be 44 characters long.");
 
-    return isConcessionary(code) ? _buildConcessionaryBarcode(code) : _buildBankBarcode(code);
+    return isConcessionary(code)
+        ? _buildConcessionaryBarcode(code)
+        : _buildBankBarcode(code);
   }
 
   /// Converts a regular type barcode to the FEBRABAN format.
@@ -27,7 +29,8 @@ class BillUtil {
 
     String block1 = newCode.substring(0, 9) + _mod10(newCode.substring(0, 9));
     String block2 = newCode.substring(9, 19) + _mod10(newCode.substring(9, 19));
-    String block3 = newCode.substring(19, 29) + _mod10(newCode.substring(19, 29));
+    String block3 =
+        newCode.substring(19, 29) + _mod10(newCode.substring(19, 29));
     String block4 = newCode.substring(29);
 
     return block1 + block2 + block3 + block4;
@@ -92,7 +95,11 @@ class BillUtil {
   /// Recursive method that reduces the input [num] until it's only one character long.
   static int _minimizeNumber(int sum) {
     if (sum <= 9) return sum;
-    int result = sum.toString().split("").map((s) => int.parse(s)).reduce((a, b) => a + b);
+    int result = sum
+        .toString()
+        .split("")
+        .map((s) => int.parse(s))
+        .reduce((a, b) => a + b);
     return result <= 9 ? result : _minimizeNumber(sum);
   }
 }
