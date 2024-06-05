@@ -9,10 +9,10 @@ import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart
 /// Widget used to read the barcode using phone's camera.
 class BillScanCameraWidget extends StatefulWidget {
   const BillScanCameraWidget({
-    Key? key,
     required this.onImage,
     this.initialDirection = CameraLensDirection.back,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Function(List<Barcode> barcodes) onImage;
   final CameraLensDirection initialDirection;
@@ -34,7 +34,6 @@ class BillScanCameraWidgetState extends State<BillScanCameraWidget> {
   /// Zoom levels.
   double zoomLevel = 1.0, minZoomLevel = 0.0;
 
-  bool _canProcess = true;
   bool _isBusy = false;
 
   final _orientations = {
@@ -122,7 +121,6 @@ class BillScanCameraWidgetState extends State<BillScanCameraWidget> {
   void _processCameraImage(CameraImage image) {
     final inputImage = convertsCameraImage(image);
     if (inputImage == null) return;
-    if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
     barcodeScanner

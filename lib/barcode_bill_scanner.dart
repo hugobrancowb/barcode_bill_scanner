@@ -45,7 +45,6 @@ import 'widgets/bill_scan_camera.widget.dart';
 /// ```
 class BarcodeBillScanner extends StatefulWidget {
   const BarcodeBillScanner({
-    Key? key,
     this.infoText = "Scan the barcode using your camera.",
     required this.onSuccess,
     this.onAction,
@@ -56,7 +55,8 @@ class BarcodeBillScanner extends StatefulWidget {
     this.textColor = const Color(0xff696876),
     this.convertToFebraban = true,
     this.backdropColor = const Color(0x99000000),
-  }) : super(key: key);
+    super.key,
+  });
 
   /// Text shown on top of the screen.
   final String infoText;
