@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Upgrades sdks and packages versions [#10](https://github.com/hugobrancowb/barcode_bill_scanner/pull/10)
+
 ## 1.1.0
 
 - Reduces memory usage [#9](https://github.com/hugobrancowb/barcode_bill_scanner/pull/9)
